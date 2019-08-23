@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+    section{
+      width: 100%;
+      height: calc(100% - 50px);
+    }
+    .content{
+      width: 100%;
+      height: 100%;
+    }
+    .content h1{
+      height: 100%;
+      line-height: 200px;
+      text-align: center
+    }
+    footer {
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      height: 50px;
+      display: flex
+    }
+    footer>a{
+      display: block;
+      height: 100%;;
+      flex: 1;
+      outline: none;
+      text-decoration: none;
+      line-height: 50px;
+      font-size: 16px;
+      text-align: center;
+      font-weight: 600;
+      color: black;
+      box-sizing: border-box
+    }
+    footer>a:nth-child(n){
+      border-left: 1px solid;
+
+    }
+    footer>a:first-child{
+      border-left: none;
+    }
+  </style>
+
+  <script>
+    window.onload = ()=>{
+
+    document.querySelectorAll('.content').forEach(el=>{
+      el.style.display='none'
+    })
+    document.querySelector('.content1').style.display = 'block'
+    }
+  </script>
+</head>
+<body>
+  <section>
+    <div class="content content1"><h1>首页</h1></div>
+    <div class="content content2"><h1>页面1</h1></div>
+    <div class="content content3"><h1>页面2</h1></div>
+    <div class="content content4"><h1>页面3</h1></div>
+  </section>
+  <footer>
+    <a data-target='1' href="javascript:;">首页</a>
+    <a data-target='2' href="javascript:;">页面1</a>
+    <a data-target='3' href="javascript:;">页面2</a>
+    <a data-target='4' href="javascript:;">页面3</a>
+  </footer>
+
+  <script>
+    
+    document.querySelector('footer').addEventListener('click',(e)=>{
+      let target = e.target.dataset.target
+      document.querySelectorAll('.content').forEach(el=>{
+        el.style.display='none'
+      })
+      document.querySelector('.content'+target).style.display = 'block'
+    })
+  </script>
+</body>
+</html>
