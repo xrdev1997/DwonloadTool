@@ -9,7 +9,8 @@ import MultiDownloader
 import json
 from xvideo import Xvideo
 from pornhub import PornHub
-from tools.tools import b_hebin
+from BestJav import BestJav
+from tools import tools
 import tkinter as tk
 import tkinter.messagebox
 from retrying import retry
@@ -17,17 +18,17 @@ from tqdm import tqdm
 
 root = tk.Tk()
 root.withdraw()
-verion = 1.2
+verion = 1.1
 
 
 def main():
 
-    # Data = requests.get('https://xrdev.design/file/update/update.txt').json()
-    # if float(Data['download_verison']) > verion:
-    #     root.withdraw()
-    #     Update = tk.messagebox.askquestion('下载器 更新','检测到新版本 是否更新!!!')
-    #     if Update=='yes':
-    #         webbrowser.open(Data['download_url'])
+    Data = requests.get('https://xrdev.design/file/update/updata.txt').json()
+    if float(Data['download_verison']) > verion:
+        root.withdraw()
+        Update = tk.messagebox.askquestion('下载器 更新','检测到新版本 是否更新!!!')
+        if Update=='yes':
+            webbrowser.open(Data['download_url'])
 
     while True:
         url = input("请输入页面URL:")
@@ -47,34 +48,11 @@ def main():
             t.run()
             del t
             continue
-        porn = PornHub(url, 30)
-        contentLen = porn.GetContentLen()
-        if contentLen == -1:
-            return
-        
-        title = 'BestPornHub1'
-        target = [0, 1023999]
-        f_list = []
-        p = ThreadPoolExecutor(30)
-        start_time = time.time()
-        haveMore = False
-        while True:
-            future = p.submit(
-                porn.PHdownload, target[0], target[1], title)
-            f_list.append(future)
-            if (target[1] + 1024000) >= contentLen:
-                haveMore = True
-                print('最后一部分: '+str(target))
-                break
-            target[0] = int(target[1]) + 1
-            target[1] = target[1] + 1024000
-
-        wait(f_list, return_when='ALL_COMPLETED')
-        if haveMore:
-            porn.PHdownload(target[1]+1, '', title)
-        end_time = time.time()
-        print("耗时: "+str(int(end_time)-int(start_time))+'s')
-        b_hebin('m3u8/'+title+'/', 'mp4/'+title+'.mp4')
+        if url.find('bestjavporn') != -1:
+            b = BestJav(url)
+            b.download()
+            del b
+            continue
 
 
 def YesClick():
@@ -106,9 +84,8 @@ def TWindow():
 if __name__ == '__main__':
     if not os.path.exists("mp4/"):
         os.mkdir("mp4")
-    main()
     if not os.path.exists("m3u8/"):
-        os.mkdir("mp4")
+        os.mkdir("m3u8")
     main()
 
     # p = ThreadPoolExecutor(15)

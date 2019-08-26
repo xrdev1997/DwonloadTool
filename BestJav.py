@@ -20,7 +20,7 @@ class BestJav:
         break
       num = int(num)
 
-      print(self.Types[num]['url'])
+      print('真实下载地址: '+self.Types[num]['url'])
       tools.DefaultDownload(self.Types[num]['url'],self.title)
       break
 
@@ -42,14 +42,13 @@ class BestJav:
 
   def Resolve(self):
     content = requests.get(self.url).content.decode('utf8')
-    self.title = re.findall(r'<title>(.+?)<',content,re.S)[0]
+    self.title = tools.Replace(re.findall(r'<title>(.+?)<',content,re.S)[0])
     content = re.findall(r'append\(\'\<iframe src=\"//(.+?)\"',content)[0]
     
     self.ResolveIframe('https://'+content)
 
   def download(self):
     self.Resolve()
-
 
 
 
