@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['xvideo_download.py'],
+a = Analysis(['Downloader.py'],
              pathex=['D:\\Work\\DownloadTool'],
              binaries=[],
              datas=[],
@@ -23,7 +23,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='xvideo_download',
+          name='Downloader',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
