@@ -54,6 +54,9 @@ def main():
             del b
             continue
 
+        filename = url.split('/')[-1].split('?')[0]
+        tools.DefaultDownload(url,filename,suffix=['file',''])
+
 
 def YesClick():
     url = inpUrl.get()
@@ -84,6 +87,8 @@ def TWindow():
 if __name__ == '__main__':
     if not os.path.exists("mp4/"):
         os.mkdir("mp4")
+    if not os.path.exists("file/"):
+        os.mkdir("file")
     if not os.path.exists("m3u8/"):
         os.mkdir("m3u8")
     main()

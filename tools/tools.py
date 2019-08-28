@@ -30,7 +30,22 @@ def GetContentLen(url):
     head = requests.get(url, headers=headers).headers
     length = str(head)
     a = re.findall(r'\d\/(\d+?)\'', length)
-    print('大小:'+str(int(a[0])/1024/1024)+'M ('+a[0]+')')
+
+    tag = 'G'
+    size = 0
+    if int(a[0])/1024/1024/1024 > 1:
+        size = round(int(a[0])/1024/1024/1024,2)
+    elif int(a[0])/1024/1024 > 1:
+        size = round(int(a[0])/1024/1024,2)
+        tag = 'M'
+    elif int(a[0])/1024 > 1:
+        size = round(int(a[0])/1024,2)
+        tag = 'K'
+    else:
+        size = a[0]
+        tag = 'B'
+
+    print('文件大小: '+str(size)+tag+ '('+a[0]+')')
     if len(a) == 0:
         return -1
 
@@ -63,7 +78,7 @@ def download(url,contentLen, start, end, outdir):
         # sys.stdout.write(jindu+'\r')
 
 
-def DefaultDownload(url,title):
+def DefaultDownload(url,title,suffix=['mp4','.mp4']):
     contentLen = GetContentLen(url)
     if contentLen == -1:
         return
@@ -88,5 +103,5 @@ def DefaultDownload(url,title):
         download(url,contentLen,target[1]+1, '', title)
     end_time = time.time()
     print("耗时: "+str(int(end_time)-int(start_time))+'s')
-    b_hebin('m3u8/'+title+'/', 'mp4/'+title+'.mp4')   
+    b_hebin('m3u8/'+title+'/', suffix[0]+'/'+title+suffix[1])   
         
