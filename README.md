@@ -6,7 +6,7 @@
 > 粘贴页面上的地址到程序里即可
 
 ## 可执行文件下载地址
-<a href='release'>Release</a>
+<a href='https://github.com/xrdev1997/DwonloadTool/release'>Release</a>
   
   <!-- ``` 
     pyinstaller -F -i favicon.ico Downloader.py
