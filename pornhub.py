@@ -8,7 +8,8 @@ from tools.tools import b_hebin
 from tools import tools
 from retrying import retry
 from concurrent.futures import ThreadPoolExecutor, wait
-
+import js2py
+from bs4 import BeautifulSoup as bs
 
 class PornHub:
 
@@ -57,18 +58,30 @@ class PornHub:
 
     def run(self):
         content = requests.get(self.url).content.decode("utf8")
+        
+        html=bs(content,'html.parser')
+  
+        jsStr = html.select("#player script")[0].string
+        try:
+            context = js2py.EvalJs()
+            context.execute(jsStr)
+        except Exception as e:
+            pass
+            
+        url = context.eval('quality_1080p || quality_720p || quality_480p || quality_240p')
         c = re.findall(
             r'var flashvars_\d+?\s+?=\s+?(\{.+?\});', str(content))[0]
         self.title = tools.Replace(re.findall(r'\<title\>(.+?)\</title\>', str(content))[0])
         print(self.title)
+        print(c)
         c = json.loads(c)
 
-        i = 0
-        url = c['mediaDefinitions'][i]['videoUrl']
-        while url == '':
-            i = i+1
-            url = c['mediaDefinitions'][i]['videoUrl']
-        print('实际地址：'+url)
+        # i = 0
+        # url = c['mediaDefinitions'][i]['videoUrl']
+        # while url == '':
+        #     i = i+1
+        #     url = c['mediaDefinitions'][i]['videoUrl']
+        # print('实际地址：'+url)
         self.url = url
 
         self.contentLen = self.GetContentLen()

@@ -5,7 +5,6 @@ import re
 import requests
 import os,sys
 import time
-import MultiDownloader
 import json
 from xvideo import Xvideo
 from pornhub import PornHub
@@ -23,12 +22,12 @@ verion = 1.1
 
 def main():
 
-    Data = requests.get('https://xrdev.design/file/update/updata.txt').json()
-    if float(Data['download_verison']) > verion:
-        root.withdraw()
-        Update = tk.messagebox.askquestion('下载器 更新','检测到新版本 是否更新!!!')
-        if Update=='yes':
-            webbrowser.open(Data['download_url'])
+    # Data = requests.get('https://xrdev.design/file/update/updata.txt').json()
+    # if float(Data['download_verison']) > verion:
+    #     root.withdraw()
+    #     Update = tk.messagebox.askquestion('下载器 更新','检测到新版本 是否更新!!!')
+    #     if Update=='yes':
+    #         webbrowser.open(Data['download_url'])
 
     while True:
         url = input("请输入页面URL:")
